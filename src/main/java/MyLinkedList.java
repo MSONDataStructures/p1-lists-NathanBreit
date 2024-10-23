@@ -53,7 +53,13 @@ public class MyLinkedList
      * @throws NullPointerException if item is null
      */
     public void addFirst(Integer item) {
-        // TODO: your code goes here
+        /*if (item == null) {
+            throw NullPointerException;
+        }*/
+        Node newNode = new Node();
+        newNode.value = item;
+        newNode.next = first;
+        first = newNode;
     }
 
     /**
@@ -65,7 +71,33 @@ public class MyLinkedList
      * @throws NullPointerException if item is null
      */
     public void add(int index, Integer item) {
-        // TODO: your code goes here
+        //Should deal with Item Argument being Null
+        /*if (item == null) {
+            throw NullPointerException;
+        }*/
+        //New Nodes for Parsing the List
+        Node Node_1 = new Node();
+        Node Node_2 = new Node();
+        Node_1 = first;
+        Node_2 = Node_1.next;
+        //Node to Be added
+        Node Add_Node = new Node();
+        Add_Node.value = item;
+
+        int count = 0;
+        while (Node_2 != null) {
+            //Add New Node once designated Location is Reached
+            if (count == index) {
+                Add_Node = Node_1.next;
+                Node_1.next = Add_Node;
+                break;
+            }
+            //Moves one Spot Down the List
+            Node_1 = Node_1.next;
+            Node_2 = Node_1.next;
+            count++;
+        }
+
     }
 
     /**
@@ -149,5 +181,17 @@ public class MyLinkedList
         // TODO: modify the code here
         return false;
     }
-
+    private void printList() {
+        System.out.printf("printing... ");
+        if (first != null) {
+            Node Node_1 = first;
+            Node Node_2 = Node_1.next;
+            while (Node_2 != null) {
+                System.out.printf("%d ", Node_1.value);
+                Node_1 = Node_1.next;
+                Node_2 = Node_1.next;
+            }
+            System.out.println();
+        }
+    }
 }

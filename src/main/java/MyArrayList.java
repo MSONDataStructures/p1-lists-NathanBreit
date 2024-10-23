@@ -1,4 +1,4 @@
-import java.util.Arrays;
+//import java.util.Arrays;
 /**
  * The MyArrayList class is the implementation of an array list of integers.
  * <p>
@@ -33,7 +33,7 @@ public class MyArrayList {
      * Appends the specified Integer to the <b>end</b> of the list.
      *
      * @param item Integer to be appended to this list
-     * @throws NullPointerException if item is null
+     * @throws <code>NullPointerException</code> if item is null
      */
     public void addLast(Integer item) {
         /*if (item == null) {
@@ -56,7 +56,10 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public void add(int index, Integer item) {
-        // TODO: your code goes here
+        //adds length to list if necessary
+        list = sizeIncrease();
+
+
     }
 
     /**
@@ -101,8 +104,7 @@ public class MyArrayList {
      * @return the number of Integers in this list
      */
     public int size() {
-        // TODO: modify the code here
-        return 0;
+        return size;
     }
 
     /**
@@ -146,8 +148,7 @@ public class MyArrayList {
      * @return true if this list is empty
      */
     public boolean isEmpty() {
-        // TODO: modify the code here
-        return false;
+        return size == 0;
     }
 
     private Integer[] sizeIncrease() {
@@ -160,7 +161,7 @@ public class MyArrayList {
         return ret;
     }
     private void printList() {
-        System.out.printf("printing... ");
+        System.out.print("printing... ");
         int i = 0;
         while (list[i] != null) {
             System.out.printf("%d, ", list[i]);
