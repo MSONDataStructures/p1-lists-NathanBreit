@@ -36,9 +36,10 @@ public class MyArrayList {
      * @throws <code>NullPointerException</code> if item is null
      */
     public void addLast(Integer item) {
-        /*if (item == null) {
-            throw NullPointerException;
-        }*/
+        if (item == null) {
+            throw new NullPointerException();
+        }
+
         // sizeIncrease increases list length if necessary
         list = sizeIncrease();
         // appends item to list
@@ -56,6 +57,10 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public void add(int index, Integer item) {
+        if (item == null) {
+            throw new NullPointerException();
+        }
+
         //adds length to list if necessary
         list = sizeIncrease();
         Integer[] temp = new Integer[list.length];
@@ -112,6 +117,10 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public void set(int index, Integer item) {
+        if (item == null) {
+            throw new NullPointerException();
+        }
+
         Integer[] temp = new Integer[list.length];
         for (int i = 0; i < list.length; i++) {
             temp[i] = list[i];
@@ -139,6 +148,10 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public int indexOf(Integer item) {
+        if (item == null) {
+            throw new NullPointerException();
+        }
+
         for (int i = 0; i < size; i++) {
             if(list[i] == item) return i;
 
@@ -154,6 +167,10 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public boolean contains(Integer item) {
+        if (item == null) {
+            throw new NullPointerException();
+        }
+
         boolean check = false;
         for (int i = 0; i < size; i++) {
             if (list[i] == item) {
