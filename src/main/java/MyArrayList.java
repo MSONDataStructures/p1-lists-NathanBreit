@@ -1,4 +1,4 @@
-//import java.util.Arrays;
+
 /**
  * The MyArrayList class is the implementation of an array list of integers.
  * <p>
@@ -58,6 +58,14 @@ public class MyArrayList {
     public void add(int index, Integer item) {
         //adds length to list if necessary
         list = sizeIncrease();
+        Integer[] temp = new Integer[list.length];
+        for (int i = 0; i <= size; i++) {
+            if (i < index) temp[i] = list[i];
+            if (i == index) temp[i] = item;
+            if (i > index) temp[i] = list[i - 1];
+        }
+        list = temp;
+        size++;
 
 
     }
@@ -70,8 +78,18 @@ public class MyArrayList {
      * @return the element that was removed from the list
      */
     public Integer remove(int index) {
-        // TODO: modify the code here
-        return null;
+        //adds length to list if necessary
+        list = sizeIncrease();
+        Integer[] temp = new Integer[list.length];
+        for (int i = 0; i < size - 1; i++) {
+            if (i < index) temp[i] = list[i];
+            if (i >= index) temp[i] = list[i + 1];
+        }
+        //used to hold value of list[index] before it get wiped by list = temp.
+        Integer valueAtIndex = list[index];
+        list = temp;
+        size--;
+        return valueAtIndex;
     }
 
     /**
@@ -81,7 +99,6 @@ public class MyArrayList {
      * @return the Integer at the specified position in this list
      */
     public Integer get(int index) {
-        // TODO: modify the code here
         if (index < 0 && index >= size) return null;
         return list[index];
     }
@@ -95,7 +112,12 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public void set(int index, Integer item) {
-        // TODO: your code goes here
+        Integer[] temp = new Integer[list.length];
+        for (int i = 0; i < list.length; i++) {
+            temp[i] = list[i];
+            if (i == index) temp[i] = item;
+        }
+        list = temp;
     }
 
     /**
@@ -117,8 +139,11 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public int indexOf(Integer item) {
-        // TODO: modify the code here
-        return 0;
+        for (int i = 0; i < size; i++) {
+            if(list[i] == item) return i;
+
+        }
+        return -1;
     }
 
     /**
@@ -129,8 +154,14 @@ public class MyArrayList {
      * @throws NullPointerException if item is null
      */
     public boolean contains(Integer item) {
-        // TODO: modify the code here
-        return false;
+        boolean check = false;
+        for (int i = 0; i < size; i++) {
+            if (list[i] == item) {
+                check = true;
+                break;
+            }
+        }
+        return check;
     }
 
     /**
@@ -139,7 +170,11 @@ public class MyArrayList {
      * @post the capacity of the array should not change
      */
     public void clear() {
-        // TODO: your code goes here
+        Integer[] temp = new Integer[list.length];
+        for (int i = 0; i < list.length; i++) {
+            list[i] = temp[i];
+        }
+        size = 0;
     }
 
     /**
@@ -161,7 +196,7 @@ public class MyArrayList {
         return ret;
     }
     private void printList() {
-        System.out.print("printing... ");
+        System.out.printf("printing... ");
         int i = 0;
         while (list[i] != null) {
             System.out.printf("%d, ", list[i]);
