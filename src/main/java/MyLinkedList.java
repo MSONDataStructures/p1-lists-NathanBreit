@@ -24,6 +24,7 @@
  */
 public class MyLinkedList
 {
+    private int size = 0;
     /**
      * The Node class is a private inner class of the <code>MyLinkedList</code>
      * class. Since none of the methods of <code>MyLinkedList</code> will return
@@ -54,13 +55,15 @@ public class MyLinkedList
      * @throws NullPointerException if item is null
      */
     public void addFirst(Integer item) {
-        /*if (item == null) {
-            throw NullPointerException;
-        }*/
+        if (item == null) throw new NullPointerException();
+        // create new Node in memory
         Node newNode = new Node();
         newNode.value = item;
+        // set newNode.next pointer to previous first node
         newNode.next = first;
+        // set first pointer to newNode
         first = newNode;
+        size++;
     }
 
     /**
@@ -72,31 +75,24 @@ public class MyLinkedList
      * @throws NullPointerException if item is null
      */
     public void add(int index, Integer item) {
-        //Should deal with Item Argument being Null
-        /*if (item == null) {
-            throw NullPointerException;
-        }*/
-        //New Nodes for Parsing the List
-        Node Node_1 = new Node();
-        Node Node_2 = new Node();
-        Node_1 = first;
-        Node_2 = Node_1.next;
-        //Node to Be added
-        Node Add_Node = new Node();
-        Add_Node.value = item;
+        if (item == null) throw new NullPointerException();
 
-        int count = 0;
-        while (Node_2 != null) {
-            //Add New Node once designated Location is Reached
-            if (count == index) {
-                Add_Node = Node_1.next;
-                Node_1.next = Add_Node;
-                break;
+        if (index != 0) {
+            Node node_current = first;
+            Node node_next = node_current.next;
+            Node node_new = new Node();
+            node_new.value = item;
+            int count = index - 1;
+
+            while (count-- > 0) {
+                node_current = node_next;
+                node_next = node_current.next;
             }
-            //Moves one Spot Down the List
-            Node_1 = Node_1.next;
-            Node_2 = Node_1.next;
-            count++;
+            node_new.next = node_next;
+            node_current.next = node_new;
+            size++;
+        } else {
+            addFirst(item);
         }
 
     }
@@ -108,8 +104,31 @@ public class MyLinkedList
      * @return the Integer that was removed from the list
      */
     public Integer remove(int index) {
-        // TODO: modify the code here
-        return null;
+        if (index < 0 || index >= size) return null;
+        if (first == null) return null;
+        Node node_previous = first;
+        Node node_current = node_previous.next;
+
+        if (index != 0) {
+            Node node_next = node_current.next;
+            int count = index - 1;
+
+            while (count-- > 0) {
+                node_previous = node_current;
+                node_current = node_next;
+                if (node_current == null) break;
+                node_next = node_current.next;
+            }
+            Integer returnValue = node_current.value;
+            node_previous.next = node_next;
+            size--;
+            return returnValue;
+        } else {
+            Integer returnValue2 = node_previous.value;
+            first = node_current;
+            size--;
+            return returnValue2;
+        }
     }
 
     /**
@@ -118,8 +137,26 @@ public class MyLinkedList
      * @return the Integer at the specified position in this list
      */
     public Integer get(int index) {
-        // TODO: modify the code here
+        Node node_current = first;
+        Node node_next = node_current.next;
+        if (index < 0 || index >= size) return null;
+        /*int count = index;
+        while(count-- > 0) { node_current = node_current.next; }
+        return node_current.value;*/
+
+
+        int count = 0;
+        while (node_current != null) {
+            if (count == index) {
+                return node_current.value;
+            }
+            node_current = node_next;
+            if (node_current == null) break;
+            node_next = node_current.next;
+            count++;
+        }
         return null;
+
     }
 
     /**
@@ -130,7 +167,16 @@ public class MyLinkedList
      * @throws NullPointerException if item is null
      */
     public void set(int index, Integer item) {
-        // TODO: your code goes here
+        if (item == null) throw new NullPointerException();
+
+        Node node_current = first;
+        if (index >= 0 && index < size) {
+            int count = index;
+            while (count-- > 0) {
+                node_current = node_current.next;
+            }
+            node_current.value = item;
+        }
     }
 
     /**
@@ -138,8 +184,7 @@ public class MyLinkedList
      * @return the number of Integers in this list
      */
     public int size() {
-        // TODO: modify the code here
-        return 0;
+        return size;
     }
 
     /**
@@ -151,8 +196,16 @@ public class MyLinkedList
      * @throws NullPointerException if item is null
      */
     public int indexOf(Integer item) {
-        // TODO: modify the code here
-        return 0;
+        if (item == null) throw new NullPointerException();
+
+        Node node_current = first;
+        int count = 0;
+        while (node_current != null) {
+            if (node_current.value == item) return count;
+            node_current = node_current.next;
+            count++;
+        }
+        return -1;
     }
 
     /**
@@ -162,7 +215,13 @@ public class MyLinkedList
      * @throws NullPointerException if item is null
      */
     public boolean contains(Integer item) {
-        // TODO: modify the code here
+        if (item == null) throw new NullPointerException();
+
+        Node node_current = first;
+        while (node_current != null) {
+            if (node_current.value == item) return true;
+            node_current = node_current.next;
+        }
         return false;
     }
 
@@ -171,7 +230,8 @@ public class MyLinkedList
      * call returns.
      */
     public void clear() {
-        // TODO: your code goes here
+        first = null;
+        size = 0;
     }
 
     /**
@@ -179,18 +239,18 @@ public class MyLinkedList
      * @return true if this list is empty
      */
     public boolean isEmpty() {
-        // TODO: modify the code here
-        return false;
+        return first == null;
     }
     private void printList() {
         System.out.printf("printing... ");
         if (first != null) {
-            Node Node_1 = first;
-            Node Node_2 = Node_1.next;
-            while (Node_2 != null) {
-                System.out.printf("%d ", Node_1.value);
-                Node_1 = Node_1.next;
-                Node_2 = Node_1.next;
+            Node node_current = first;
+            Node node_next = node_current.next;
+            while (node_current != null) {
+                System.out.printf("%d ", node_current.value);
+                node_current = node_next;
+                if (node_current == null) break;
+                node_next = node_current.next;
             }
             System.out.println();
         }

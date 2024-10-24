@@ -71,8 +71,6 @@ public class MyArrayList {
         }
         list = temp;
         size++;
-
-
     }
 
     /**
