@@ -19,7 +19,7 @@
  */
 public class MyArrayList {
     private Integer[] list;
-    private int size = 0;
+    private int size;
 
     /**
      * Constructs an empty list with an initial capacity of ten.
@@ -27,6 +27,7 @@ public class MyArrayList {
     public MyArrayList() {
         list = new Integer[10];
         // TODO: you can add code here
+        size = 0;
     }
 
     /**
@@ -82,15 +83,10 @@ public class MyArrayList {
      */
     public Integer remove(int index) {
         //adds length to list if necessary
-        list = sizeIncrease();
-        Integer[] temp = new Integer[list.length];
-        for (int i = 0; i < size - 1; i++) {
-            if (i < index) temp[i] = list[i];
-            if (i >= index) temp[i] = list[i + 1];
-        }
-        //used to hold value of list[index] before it get wiped by list = temp.
         Integer valueAtIndex = list[index];
-        list = temp;
+        for (int i = 0; i < size - 1; i++) {
+            if (i >= index) list[i] = list[i + 1];
+        }
         size--;
         return valueAtIndex;
     }
